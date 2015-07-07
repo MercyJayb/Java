@@ -1,0 +1,49 @@
+
+
+package mydb;
+
+
+import java.sql.*;
+public class MyDb {
+ Connection con;
+ Statement stm;
+ ResultSet rs;
+ PreparedStatement pst;
+ String url="jdbc:mysql://localhost:3306/login";
+ String user="root";
+ String password="mercie";
+ String sql="select * from loginn";
+ 
+ public MyDb(){ //superclass
+     try{
+      con=DriverManager.getConnection(url,user,password);
+      stm=con.createStatement();
+      rs=stm.executeQuery(sql);
+      System.out.println("Users are:");
+      
+      String user="";
+      String role="";
+      int last=0;
+      rs.last();
+      
+      last=rs.getRow();
+      
+      rs.first();
+      
+      
+     for(int i=0; i<last; i++)
+     {
+      user=rs.getString("username");
+      role=rs.getString("role");
+      System.out.println("Username : "+user+"\n Role : "+role);
+      rs.next();
+     }
+     }
+     catch(SQLException e){
+    System.out.println("The error is "+e.getMessage());    
+     }
+ }
+ public static void main(String[] args){
+    new MyDb(); //instance of the superclass
+ }
+}
